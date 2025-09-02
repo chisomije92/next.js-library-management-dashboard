@@ -1,3 +1,4 @@
+"use client";
 import { observer } from "mobx-react-lite";
 import { useReadingList } from "@/state/ReadingListContext";
 import Layout from "@/components/layouts/Layout";

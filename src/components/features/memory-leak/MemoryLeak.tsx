@@ -1,3 +1,4 @@
+"use client";
 import Layout from "@/components/layouts/Layout";
 import { useMemoryLeaks } from "@/hooks/useMemoryLeaks";
 
