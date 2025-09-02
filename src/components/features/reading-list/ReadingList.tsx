@@ -5,41 +5,49 @@ import Layout from "@/components/layouts/Layout";
 import { Button, Input } from "@/components/ui";
 
 const ReadingListManager = observer(() => {
-  const readingList = useReadingList();
+  const {
+    addBook,
+    author,
+    title,
+    unreadCount,
+    sortedBooks,
+    setAuthor,
+    setTitle,
+    removeBook,
+    markAsRead,
+  } = useReadingList();
 
   return (
     <Layout>
       <h2 className="text-2xl font-bold mb-4">Reading List</h2>
-      <p className="text-sm text-gray-500">
-        Unread Books: {readingList.unreadCount}
-      </p>
+      <p className="text-sm text-gray-500">Unread Books: {unreadCount}</p>
       <div className="mb-4">
         <Input
           type="text"
           placeholder="Book Title"
           className="border p-2 mr-2"
-          value={readingList.title}
-          onChange={(e) => readingList.setTitle(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <Input
           type="text"
           placeholder="Author"
           className="border p-2 mr-2"
-          value={readingList.author}
-          onChange={(e) => readingList.setAuthor(e.target.value)}
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
         />
         <Button
           onClick={() => {
-            readingList.addBook(Date.now().toString());
-            readingList.setTitle("");
-            readingList.setAuthor("");
+            addBook(Date.now().toString());
+            setTitle("");
+            setAuthor("");
           }}
         >
           Add Book
         </Button>
       </div>
       <ul className="space-y-4">
-        {readingList.sortedBooks.map((book) => (
+        {sortedBooks.map((book) => (
           <li
             key={book.id}
             className="border p-4 rounded bg-white flex justify-between"
@@ -56,7 +64,7 @@ const ReadingListManager = observer(() => {
                 <Button
                   className=" px-3 py-1"
                   variant="success"
-                  onClick={() => readingList.markAsRead(book.id)}
+                  onClick={() => markAsRead(book.id)}
                 >
                   Mark as Read
                 </Button>
@@ -64,7 +72,7 @@ const ReadingListManager = observer(() => {
               <Button
                 variant="destructive"
                 className="  px-3 py-1"
-                onClick={() => readingList.removeBook(book.id)}
+                onClick={() => removeBook(book.id)}
               >
                 Remove
               </Button>
