@@ -1,16 +1,5 @@
-import Layout from '@/components/Layout';
+import Home from "@/components/features/home/Home";
 
-export default function Home() {
-  return (
-    <Layout>
-      <div>
-        <p className="text-lg">
-          Welcome to the Library Dashboard. Use the sidebar to navigate.
-        </p>
-        <a href="/books" className="text-blue-500 underline">
-          Go to Books List
-        </a>
-      </div>
-    </Layout>
-  );
+export default function Page() {
+  return <Home />;
 }

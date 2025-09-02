@@ -1,8 +1,32 @@
-import React, { ReactNode } from 'react';
+import Link from "next/link";
+import React, { ReactNode } from "react";
 
 interface LayoutProps {
   children: ReactNode;
 }
+
+const ROUTES = [
+  {
+    id: 1,
+    href: "/",
+    label: "Home",
+  },
+  {
+    id: 2,
+    href: "/books",
+    label: "Books",
+  },
+  {
+    id: 3,
+    href: "/reading-list",
+    label: "Reading List",
+  },
+  {
+    id: 4,
+    href: "/debug/memory-leak",
+    label: "Debugging",
+  },
+];
 
 export default function Layout({ children }: LayoutProps) {
   return (
@@ -11,18 +35,13 @@ export default function Layout({ children }: LayoutProps) {
         <h2 className="text-2xl font-bold mb-8">Dashboard</h2>
         <nav>
           <ul>
-            <li className="mb-4">
-              <a href="/" className="hover:text-gray-300">Home</a>
-            </li>
-            <li className="mb-4">
-              <a href="/books" className="hover:text-gray-300">Books</a>
-            </li>
-            <li className="mb-4">
-              <a href="/reading-list" className="hover:text-gray-300">Reading List</a>
-            </li>
-            <li className="mb-4">
-              <a href="/debug/memory-leak" className="hover:text-gray-300">Debugging</a>
-            </li>
+            {ROUTES.map((route) => (
+              <li className="mb-4" key={route.id}>
+                <Link href={route.href} className="hover:text-gray-300">
+                  {route.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </aside>

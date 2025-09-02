@@ -1,46 +1,48 @@
 import { observer } from "mobx-react-lite";
 import { useReadingList } from "@/state/ReadingListContext";
-import Layout from "@/components/Layout";
-import { useState } from "react";
+import Layout from "@/components/layouts/Layout";
+import { Button, Input } from "@/components/ui";
 
 const ReadingListManager = observer(() => {
   const readingList = useReadingList();
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
 
   return (
     <Layout>
       <h2 className="text-2xl font-bold mb-4">Reading List</h2>
-      <p className="text-sm text-gray-500">Unread Books: {readingList.unreadCount}</p>
+      <p className="text-sm text-gray-500">
+        Unread Books: {readingList.unreadCount}
+      </p>
       <div className="mb-4">
-        <input
+        <Input
           type="text"
           placeholder="Book Title"
           className="border p-2 mr-2"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={readingList.title}
+          onChange={(e) => readingList.setTitle(e.target.value)}
         />
-        <input
+        <Input
           type="text"
           placeholder="Author"
           className="border p-2 mr-2"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
+          value={readingList.author}
+          onChange={(e) => readingList.setAuthor(e.target.value)}
         />
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+        <Button
           onClick={() => {
-            readingList.addBook(Date.now().toString(), title, author);
-            setTitle("");
-            setAuthor("");
+            readingList.addBook(Date.now().toString());
+            readingList.setTitle("");
+            readingList.setAuthor("");
           }}
         >
           Add Book
-        </button>
+        </Button>
       </div>
       <ul className="space-y-4">
         {readingList.sortedBooks.map((book) => (
-          <li key={book.id} className="border p-4 rounded bg-white flex justify-between">
+          <li
+            key={book.id}
+            className="border p-4 rounded bg-white flex justify-between"
+          >
             <div>
               <h3 className="text-xl">{book.title}</h3>
               <p>{book.author}</p>
@@ -50,19 +52,21 @@ const ReadingListManager = observer(() => {
             </div>
             <div className="flex space-x-2">
               {!book.read && (
-                <button
-                  className="bg-green-500 text-white px-3 py-1 rounded"
+                <Button
+                  className=" px-3 py-1"
+                  variant="success"
                   onClick={() => readingList.markAsRead(book.id)}
                 >
                   Mark as Read
-                </button>
+                </Button>
               )}
-              <button
-                className="bg-red-500 text-white px-3 py-1 rounded"
+              <Button
+                variant="destructive"
+                className="  px-3 py-1"
                 onClick={() => readingList.removeBook(book.id)}
               >
                 Remove
-              </button>
+              </Button>
             </div>
           </li>
         ))}
